@@ -1,0 +1,2200 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b12">
+<meta name="description" content="Satz Studio — Criando mundos, experiências e aventuras no universo Roblox.">
+<title>SATZ STUDIO — Beyond Imagination</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080b12;
+    --bg2: #0d121d;
+    --card: #111927;
+    --card2: #151f30;
+    --white: #f4f7ff;
+    --muted: #8995a9;
+    --blue: #397dff;
+    --cyan: #36d9ff;
+    --purple: #8665ff;
+    --line: rgba(255,255,255,.09);
+    --font-title: 'Barlow Condensed', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --discord: #5865f2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+::selection {
+    background: var(--blue);
+    color: white;
+}
+
+.container {
+    width: min(1180px, 90%);
+    margin: auto;
+}
+
+.section {
+    padding: 110px 0;
+    position: relative;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+}
+
+.section-heading h2 {
+    font: 800 clamp(42px, 6vw, 68px)/.95 var(--font-title);
+    text-transform: uppercase;
+    margin: 17px 0;
+}
+
+.section-heading h2 span {
+    color: var(--blue);
+}
+
+.section-heading p {
+    max-width: 570px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.btn {
+    min-height: 48px;
+    padding: 0 23px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: .3s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 8px 30px rgba(57,125,255,.2);
+}
+
+.btn-primary:hover {
+    background: #5790ff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(57,125,255,.35);
+}
+
+.btn-outline {
+    border-color: rgba(255,255,255,.2);
+    color: white;
+    background: rgba(255,255,255,.03);
+}
+
+.btn-outline:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    transform: translateY(-3px);
+}
+
+.btn-discord {
+    background: var(--discord);
+    color: white;
+    box-shadow: 0 8px 30px rgba(88,101,242,.2);
+}
+
+.btn-discord:hover {
+    background: #7180ff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(88,101,242,.35);
+}
+
+.btn svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+}
+
+/* LOADER */
+
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #070a10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity .7s, visibility .7s;
+}
+
+.loader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader img {
+    width: 130px;
+    max-height: 100px;
+    object-fit: contain;
+    animation: loaderPulse 1.5s infinite;
+}
+
+.loader-line {
+    width: 140px;
+    height: 2px;
+    margin-top: 30px;
+    background: #202b40;
+    overflow: hidden;
+}
+
+.loader-line::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 40%;
+    background: var(--cyan);
+    animation: loading 1s infinite ease-in-out;
+}
+
+@keyframes loading {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(350%); }
+}
+
+@keyframes loaderPulse {
+    50% { transform: scale(1.07); opacity: .7; }
+}
+
+/* PROGRESS */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg,var(--blue),var(--cyan));
+    z-index: 2000;
+}
+
+/* HEADER */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 82px;
+    display: flex;
+    align-items: center;
+    transition: .35s;
+    border-bottom: 1px solid transparent;
+}
+
+header.scrolled {
+    height: 70px;
+    background: rgba(8,11,18,.92);
+    backdrop-filter: blur(18px);
+    border-bottom-color: var(--line);
+}
+
+.nav-container {
+    width: min(1280px,92%);
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.brand img {
+    width: 145px;
+    max-height: 54px;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+    color: #aab5c8;
+    transition: .25s;
+    position: relative;
+}
+
+.nav-links a:not(.nav-discord)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -9px;
+    height: 2px;
+    width: 0;
+    background: var(--cyan);
+    transition: .3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: white;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links .nav-discord {
+    color: white;
+    background: var(--discord);
+    padding: 12px 17px;
+    border-radius: 4px;
+}
+
+.nav-links .nav-discord:hover {
+    background: #7180ff;
+    transform: translateY(-2px);
+}
+
+.menu-toggle {
+    display: none;
+    width: 43px;
+    height: 43px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: white;
+    border-radius: 5px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 750px;
+    height: 100vh;
+    max-height: 950px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(90deg,rgba(5,8,15,.96) 0%,rgba(5,8,15,.75) 48%,rgba(5,8,15,.28) 100%),
+        linear-gradient(0deg,var(--bg),transparent 35%),
+        url('satz-studio-2.png') center/cover no-repeat;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size: 55px 55px;
+    mask-image: linear-gradient(to right,black,transparent);
+    pointer-events: none;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    right: -130px;
+    top: 20%;
+    border-radius: 50%;
+    background: rgba(38,105,255,.12);
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    padding-top: 50px;
+    animation: heroEnter 1s ease both;
+}
+
+@keyframes heroEnter {
+    from { opacity: 0; transform: translateY(35px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--cyan);
+    border: 1px solid rgba(54,217,255,.25);
+    background: rgba(54,217,255,.06);
+    padding: 9px 14px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+.hero-tag span {
+    width: 6px;
+    height: 6px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--cyan);
+}
+
+.hero h1 {
+    font: 900 clamp(65px,10vw,120px)/.8 var(--font-title);
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+.hero h1 span {
+    color: var(--blue);
+    display: block;
+    margin-top: 12px;
+    text-shadow: 0 0 45px rgba(57,125,255,.25);
+}
+
+.hero-description {
+    color: #aab5c8;
+    max-width: 490px;
+    font-size: 14px;
+    line-height: 1.9;
+    margin: 30px 0;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+}
+
+.hero-bottom {
+    position: absolute;
+    bottom: 35px;
+    left: 5%;
+    right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.hero-bottom small {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #8490a5;
+    font-weight: 700;
+}
+
+.scroll-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.scroll-indicator span {
+    width: 35px;
+    height: 1px;
+    background: var(--cyan);
+}
+
+/* STUDIO STRIP */
+
+.studio-strip {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: #0b101a;
+    padding: 24px 0;
+}
+
+.strip-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.strip-item {
+    color: #a4b0c4;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.strip-item strong {
+    color: var(--cyan);
+    font: 700 25px var(--font-title);
+}
+
+/* PROJECTS */
+
+.projects-section {
+    background:
+        radial-gradient(ellipse at 50% 0%,rgba(34,84,175,.1),transparent 50%),
+        var(--bg);
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 38px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: 11px 20px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 22px;
+}
+
+.project-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: .4s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+}
+
+.project-card:hover {
+    transform: translateY(-9px);
+    border-color: rgba(54,217,255,.45);
+    box-shadow: 0 25px 55px rgba(0,0,0,.28);
+}
+
+.project-card.hidden {
+    display: none;
+}
+
+.project-image {
+    height: 230px;
+    position: relative;
+    overflow: hidden;
+    background: #101827;
+    cursor: pointer;
+}
+
+.project-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg,rgba(8,11,18,.8),transparent 70%);
+    pointer-events: none;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .65s;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.08);
+}
+
+.project-number {
+    position: absolute;
+    z-index: 2;
+    top: 16px;
+    left: 16px;
+    font: 700 17px var(--font-title);
+    color: white;
+    text-shadow: 0 2px 10px black;
+}
+
+.project-category {
+    position: absolute;
+    z-index: 2;
+    bottom: 15px;
+    left: 17px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    color: var(--cyan);
+    text-transform: uppercase;
+}
+
+.project-info {
+    padding: 23px;
+}
+
+.project-logo {
+    height: 52px;
+    max-width: 190px;
+    object-fit: contain;
+    object-position: left center;
+    margin-bottom: 14px;
+}
+
+.project-info p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    min-height: 63px;
+}
+
+.project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.project-footer small {
+    color: #77849a;
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.play-link {
+    color: var(--cyan);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: .25s;
+}
+
+.play-link:hover {
+    color: white;
+    gap: 12px;
+}
+
+/* FEATURED */
+
+.featured {
+    background: #0c121e;
+    overflow: hidden;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 65px;
+}
+
+.featured-art {
+    position: relative;
+    cursor: pointer;
+}
+
+.featured-art::before {
+    content: "";
+    position: absolute;
+    inset: 20px -20px -20px 20px;
+    border: 1px solid rgba(54,217,255,.25);
+    z-index: 0;
+}
+
+.featured-art img {
+    width: 100%;
+    height: 410px;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+    transition: .5s;
+}
+
+.featured-art:hover img {
+    transform: translate(-5px,-5px);
+}
+
+.featured-content .eyebrow {
+    margin-bottom: 20px;
+}
+
+.featured-content h2 {
+    font: 900 clamp(48px,6vw,75px)/.85 var(--font-title);
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.featured-content h2 span {
+    display: block;
+    color: var(--blue);
+    margin-top: 8px;
+}
+
+.featured-content p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 2;
+    margin-bottom: 25px;
+    max-width: 490px;
+}
+
+.featured-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.featured-point {
+    padding: 15px;
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--line);
+}
+
+.featured-point strong {
+    display: block;
+    color: var(--cyan);
+    font: 700 20px var(--font-title);
+    margin-bottom: 4px;
+}
+
+.featured-point span {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* ABOUT */
+
+.about-section {
+    background:
+        radial-gradient(circle at 10% 50%,rgba(57,125,255,.08),transparent 35%),
+        var(--bg);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    align-items: center;
+    gap: 75px;
+}
+
+.about-logo {
+    min-height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg,#111b2c,#0a0f18);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-logo::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border: 1px solid rgba(54,217,255,.2);
+    transform: rotate(45deg);
+}
+
+.about-logo img {
+    width: 65%;
+    max-height: 190px;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 0 25px rgba(57,125,255,.2));
+}
+
+.about-content h2 {
+    font: 800 clamp(45px,6vw,65px)/.95 var(--font-title);
+    text-transform: uppercase;
+    margin: 18px 0 22px;
+}
+
+.about-content h2 span {
+    color: var(--blue);
+}
+
+.about-content p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 2;
+    margin-bottom: 16px;
+}
+
+/* VALUES */
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.value-card {
+    padding: 30px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    transition: .35s;
+    position: relative;
+    overflow: hidden;
+}
+
+.value-card::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: -50px;
+    bottom: -50px;
+    background: var(--blue);
+    filter: blur(65px);
+    opacity: 0;
+    transition: .4s;
+}
+
+.value-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(57,125,255,.45);
+}
+
+.value-card:hover::after {
+    opacity: .5;
+}
+
+.value-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: rgba(57,125,255,.13);
+    color: var(--cyan);
+    font-size: 22px;
+    margin-bottom: 22px;
+}
+
+.value-card h3 {
+    font: 700 25px var(--font-title);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.value-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+/* COMMUNITY */
+
+.community-section {
+    background:
+        radial-gradient(ellipse at 50% 30%,rgba(88,101,242,.15),transparent 55%),
+        linear-gradient(180deg,#0d1322,#090d16);
+    overflow: hidden;
+}
+
+.community-banner {
+    position: relative;
+    padding: 55px 45px;
+    border: 1px solid rgba(126,137,255,.23);
+    background: linear-gradient(120deg,rgba(88,101,242,.12),rgba(255,255,255,.025));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    margin-bottom: 35px;
+    overflow: hidden;
+}
+
+.community-banner::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    right: 15%;
+    top: -160px;
+    background: rgba(88,101,242,.2);
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.community-banner-content {
+    position: relative;
+    z-index: 1;
+}
+
+.community-banner h3 {
+    font: 800 clamp(36px,5vw,55px)/.95 var(--font-title);
+    text-transform: uppercase;
+    margin: 15px 0;
+}
+
+.community-banner h3 span {
+    color: #8290ff;
+}
+
+.community-banner p {
+    max-width: 550px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.community-banner .btn {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.community-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 17px;
+}
+
+.community-card {
+    padding: 25px;
+    background: rgba(15,23,39,.9);
+    border: 1px solid var(--line);
+    transition: .35s;
+    position: relative;
+    overflow: hidden;
+}
+
+.community-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(126,137,255,.55);
+    background: #151e33;
+}
+
+.community-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 19px;
+}
+
+.community-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(88,101,242,.15);
+    color: #929cff;
+    font-size: 21px;
+}
+
+.community-tag {
+    font-size: 8px;
+    color: #aab3ff;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.community-card h4 {
+    font: 700 25px var(--font-title);
+    text-transform: uppercase;
+    margin-bottom: 9px;
+}
+
+.community-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+    min-height: 59px;
+}
+
+.community-card a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    color: #929cff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: .25s;
+}
+
+.community-card a:hover {
+    color: white;
+    gap: 13px;
+}
+
+.community-note {
+    margin-top: 22px;
+    text-align: center;
+    color: #78849b;
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+/* FAQ */
+
+.faq-section {
+    background: var(--bg);
+}
+
+.faq-list {
+    max-width: 780px;
+    margin: auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--line);
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 4px;
+    text-align: left;
+    cursor: pointer;
+    font: 600 21px var(--font-title);
+    text-transform: uppercase;
+}
+
+.faq-question span:last-child {
+    color: var(--cyan);
+    font-size: 22px;
+    transition: .3s;
+}
+
+.faq-item.open .faq-question span:last-child {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+}
+
+.faq-answer p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+    padding: 0 35px 22px 4px;
+}
+
+/* CTA */
+
+.cta-section {
+    padding: 90px 0;
+    background:
+        linear-gradient(90deg,rgba(6,10,18,.96),rgba(6,10,18,.72)),
+        url('satz-studio-2.png') center/cover;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.cta-content {
+    text-align: center;
+}
+
+.cta-content h2 {
+    font: 900 clamp(48px,7vw,85px)/.85 var(--font-title);
+    text-transform: uppercase;
+    margin: 18px 0;
+}
+
+.cta-content h2 span {
+    color: var(--blue);
+}
+
+.cta-content p {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 20px auto 28px;
+    max-width: 510px;
+    line-height: 1.9;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 55px 0 25px;
+    background: #070a10;
+}
+
+.footer-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+}
+
+.footer-brand img {
+    width: 145px;
+    max-height: 60px;
+    object-fit: contain;
+    margin-bottom: 17px;
+}
+
+.footer-brand p {
+    max-width: 280px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.footer-column h4 {
+    font: 700 20px var(--font-title);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+.footer-column a {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 12px;
+    transition: .25s;
+}
+
+.footer-column a:hover {
+    color: var(--cyan);
+    transform: translateX(4px);
+}
+
+.footer-bottom {
+    padding-top: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: #657188;
+    font-size: 10px;
+}
+
+.footer-bottom span {
+    color: var(--cyan);
+}
+
+/* FLOATING DISCORD */
+
+.floating-discord {
+    position: fixed;
+    z-index: 900;
+    right: 25px;
+    bottom: 25px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: white;
+    background: var(--discord);
+    box-shadow: 0 8px 30px rgba(88,101,242,.4);
+    transition: .3s;
+}
+
+.floating-discord svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+}
+
+.floating-discord:hover {
+    transform: translateY(-6px) scale(1.06);
+    background: #7180ff;
+    box-shadow: 0 12px 40px rgba(88,101,242,.55);
+}
+
+.discord-tooltip {
+    position: absolute;
+    right: 70px;
+    background: #151d30;
+    border: 1px solid var(--line);
+    color: white;
+    white-space: nowrap;
+    padding: 10px 13px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: .25s;
+    pointer-events: none;
+}
+
+.floating-discord:hover .discord-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* BACK TO TOP */
+
+.back-top {
+    position: fixed;
+    right: 31px;
+    bottom: 98px;
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    background: #182438;
+    color: white;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-size: 19px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: .3s;
+    z-index: 850;
+}
+
+.back-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* LIGHTBOX */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.92);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+}
+
+.lightbox.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: min(100%,1000px);
+    max-height: 85vh;
+    object-fit: contain;
+    transform: scale(.94);
+    transition: .3s;
+}
+
+.lightbox.show img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+/* REVEAL */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 900px) {
+    .nav-links {
+        gap: 17px;
+    }
+
+    .nav-links a {
+        font-size: 9px;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .featured-grid,
+    .about-grid {
+        gap: 40px;
+    }
+
+    .community-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width: 700px) {
+    .section {
+        padding: 80px 0;
+    }
+
+    header {
+        height: 70px;
+    }
+
+    .brand img {
+        width: 120px;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: relative;
+        z-index: 1002;
+    }
+
+    .nav-links {
+        position: fixed;
+        inset: 0;
+        background: rgba(7,10,17,.98);
+        backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 27px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-12px);
+        transition: .3s;
+        z-index: 1001;
+    }
+
+    .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-links a {
+        font-size: 15px;
+    }
+
+    .nav-links .nav-discord {
+        padding: 15px 24px;
+    }
+
+    .hero {
+        min-height: 700px;
+        height: 92vh;
+        background-position: 60% center;
+    }
+
+    .hero h1 {
+        font-size: clamp(65px,15vw,95px);
+    }
+
+    .hero-description {
+        font-size: 12px;
+    }
+
+    .hero-bottom {
+        bottom: 25px;
+    }
+
+    .strip-inner {
+        justify-content: center;
+        gap: 20px 30px;
+    }
+
+    .strip-item {
+        font-size: 9px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        max-width: 470px;
+        margin: auto;
+    }
+
+    .project-image {
+        height: 240px;
+    }
+
+    .featured-grid,
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-art img {
+        height: 300px;
+    }
+
+    .featured-content {
+        order: -1;
+    }
+
+    .about-logo {
+        min-height: 260px;
+    }
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .community-banner {
+        padding: 35px 25px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .community-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .community-card p {
+        min-height: auto;
+    }
+
+    .footer-main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-brand {
+        grid-column: 1/-1;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .floating-discord {
+        width: 53px;
+        height: 53px;
+        right: 17px;
+        bottom: 17px;
+    }
+
+    .back-top {
+        right: 22px;
+        bottom: 82px;
+    }
+}
+
+@media(max-width: 390px) {
+    .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+
+    .featured-points {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+}
+
+@media(prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader" id="loader">
+    <img src="satz-studio-1.png" alt="Satz Studio">
+    <div class="loader-line"></div>
+</div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header id="header">
+    <div class="nav-container">
+        <a href="#inicio" class="brand">
+            <img src="satz-studio-1.png" alt="Satz Studio">
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#inicio">INÍCIO</a>
+            <a href="#jogos">JOGOS</a>
+            <a href="#estudio">ESTÚDIO</a>
+            <a href="#processo">NOSSA VISÃO</a>
+            <a href="#comunidade">COMUNIDADE</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer" class="nav-discord">DISCORD ↗</a>
+        </nav>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+    </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero" id="inicio">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-tag"><span></span> ROBLOX GAME DEVELOPMENT STUDIO</div>
+
+            <h1>
+                BEYOND
+                <span>IMAGINATION.</span>
+            </h1>
+
+            <p class="hero-description">
+                Criamos mundos, desenvolvemos experiências e transformamos ideias em aventuras.
+                Bem-vindo à Satz Studio.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#jogos" class="btn btn-primary">EXPLORAR JOGOS →</a>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer" class="btn btn-discord">
+                    <svg viewBox="0 0 24 24"><path d="M19.73 5.1a18.1 18.1 0 0 0-4.45-1.38.07.07 0 0 0-.08.04c-.19.34-.4.79-.55 1.14a16.8 16.8 0 0 0-5.03 0c-.15-.36-.36-.8-.56-1.14a.08.08 0 0 0-.08-.04A18 18 0 0 0 4.53 5.1a.07.07 0 0 0-.03.03C1.67 9.34.9 13.45 1.28 17.5c0 .02.02.05.04.06a18.2 18.2 0 0 0 5.46 2.76.08.08 0 0 0 .09-.03c.42-.57.8-1.17 1.12-1.8a.08.08 0 0 0-.04-.1 12 12 0 0 1-1.7-.82.08.08 0 0 1-.01-.13l.34-.27a.08.08 0 0 1 .08-.01c3.57 1.63 7.44 1.63 10.97 0a.08.08 0 0 1 .08.01l.34.27a.08.08 0 0 1-.01.13c-.54.32-1.1.6-1.7.82a.08.08 0 0 0-.04.1c.33.63.7 1.23 1.12 1.8a.08.08 0 0 0 .09.03 18.1 18.1 0 0 0 5.46-2.76.08.08 0 0 0 .04-.06c.45-4.68-.76-8.76-3.22-12.37a.06.06 0 0 0-.03-.03ZM8.28 14.9c-1.07 0-1.95-.98-1.95-2.18 0-1.2.86-2.18 1.95-2.18 1.1 0 1.97.99 1.95 2.18 0 1.2-.86 2.18-1.95 2.18Zm7.2 0c-1.07 0-1.95-.98-1.95-2.18 0-1.2.86-2.18 1.95-2.18 1.1 0 1.97.99 1.95 2.18 0 1.2-.85 2.18-1.95 2.18Z"/></svg>
+                    NOSSO DISCORD
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-bottom">
+        <small>SATZ STUDIO © 2026</small>
+        <div class="scroll-indicator">
+            <small>SCROLL TO EXPLORE</small>
+            <span></span>
+        </div>
+    </div>
+</section>
+
+<!-- STRIP -->
+
+<div class="studio-strip">
+    <div class="container strip-inner">
+        <div class="strip-item"><strong>01</strong> CRIATIVIDADE</div>
+        <div class="strip-item"><strong>02</strong> EXPERIÊNCIA</div>
+        <div class="strip-item"><strong>03</strong> INOVAÇÃO</div>
+        <div class="strip-item"><strong>04</strong> COMUNIDADE</div>
+    </div>
+</div>
+
+<!-- PROJECTS -->
+
+<section class="section projects-section" id="jogos">
+    <div class="container">
+        <div class="section-heading reveal">
+            <span class="eyebrow">NOSSOS PROJETOS</span>
+            <h2>EXPLORE NOSSOS <span>UNIVERSOS</span></h2>
+            <p>Cada projeto possui sua própria identidade, mecânicas e experiências. Escolha seu próximo destino.</p>
+        </div>
+
+        <div class="filters reveal">
+            <button class="filter-btn active" data-filter="all">TODOS</button>
+            <button class="filter-btn" data-filter="aventura">AVENTURA</button>
+            <button class="filter-btn" data-filter="simulacao">SIMULAÇÃO</button>
+            <button class="filter-btn" data-filter="acao">AÇÃO</button>
+        </div>
+
+        <div class="projects-grid">
+
+            <article class="project-card reveal" data-category="aventura">
+                <div class="project-image lightbox-trigger">
+                    <img src="Black Seas/black-seas-4.png" alt="Black Seas" loading="lazy">
+                    <span class="project-number">01 / 03</span>
+                    <span class="project-category">AVENTURA</span>
+                </div>
+                <div class="project-info">
+                    <img class="project-logo" src="Black Seas/black-seas-1.png" alt="Black Seas logo" loading="lazy">
+                    <p>Explore um mundo cheio de mistérios, desafios e aventuras. Descubra o que espera por você em Black Seas.</p>
+                    <div class="project-footer">
+                        <small>ROBLOX EXPERIENCE</small>
+                        <a class="play-link" href="https://www.roblox.com/games/10777289813" target="_blank" rel="noopener noreferrer">JOGAR AGORA ↗</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card reveal" data-category="simulacao">
+                <div class="project-image lightbox-trigger">
+                    <img src="Operação Brasil/operacao-brasil-4.png" alt="Operação Brasil" loading="lazy">
+                    <span class="project-number">02 / 03</span>
+                    <span class="project-category">SIMULAÇÃO</span>
+                </div>
+                <div class="project-info">
+                    <img class="project-logo" src="Operação Brasil/operacao-brasil-1.png" alt="Operação Brasil logo" loading="lazy">
+                    <p>Uma experiência inspirada no Brasil, com cenários, possibilidades e situações para explorar.</p>
+                    <div class="project-footer">
+                        <small>ROBLOX EXPERIENCE</small>
+                        <a class="play-link" href="https://www.roblox.com/games/10771742919" target="_blank" rel="noopener noreferrer">JOGAR AGORA ↗</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project-card reveal" data-category="acao">
+                <div class="project-image lightbox-trigger">
+                    <img src="Street Rivals/street-rivals-4.png" alt="Street Rivals" loading="lazy">
+                    <span class="project-number">03 / 03</span>
+                    <span class="project-category">AÇÃO</span>
+                </div>
+                <div class="project-info">
+                    <img class="project-logo" src="Street Rivals/street-rivals-1.png" alt="Street Rivals logo" loading="lazy">
+                    <p>Entre em uma experiência urbana cheia de competição, desafios e momentos intensos.</p>
+                    <div class="project-footer">
+                        <small>ROBLOX EXPERIENCE</small>
+                        <a class="play-link" href="https://www.roblox.com/games/10769788474" target="_blank" rel="noopener noreferrer">JOGAR AGORA ↗</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- FEATURED -->
+
+<section class="section featured">
+    <div class="container featured-grid">
+        <div class="featured-art lightbox-trigger reveal">
+            <img src="Black Seas/black-seas-2.png" alt="Black Seas artwork" loading="lazy">
+        </div>
+
+        <div class="featured-content reveal">
+            <span class="eyebrow">DESTAQUE DO ESTÚDIO</span>
+            <h2>BLACK <span>SEAS.</span></h2>
+            <p>Um dos universos da Satz Studio. Uma experiência desenvolvida para levar os jogadores a explorar, descobrir e viver novas aventuras.</p>
+
+            <div class="featured-points">
+                <div class="featured-point">
+                    <strong>EXPLORE</strong>
+                    <span>Descubra novos cenários</span>
+                </div>
+                <div class="featured-point">
+                    <strong>DESCUBRA</strong>
+                    <span>Encontre novos desafios</span>
+                </div>
+            </div>
+
+            <a href="https://www.roblox.com/games/10777289813" target="_blank" rel="noopener noreferrer" class="btn btn-primary">JOGAR BLACK SEAS ↗</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+
+<section class="section about-section" id="estudio">
+    <div class="container about-grid">
+        <div class="about-logo reveal">
+            <img src="satz-studio-1.png" alt="Satz Studio">
+        </div>
+
+        <div class="about-content reveal">
+            <span class="eyebrow">QUEM SOMOS</span>
+            <h2>MAIS QUE UM <span>ESTÚDIO.</span></h2>
+            <p>A Satz Studio é um estúdio independente focado no desenvolvimento de experiências dentro do universo Roblox.</p>
+            <p>Nossa proposta é transformar ideias em projetos com identidade própria, explorando criatividade, mecânicas e experiências que aproximam jogadores.</p>
+            <p>Estamos sempre buscando evoluir nossos projetos e construir uma comunidade em torno deles.</p>
+            <a href="#comunidade" class="btn btn-outline">CONHEÇA NOSSA COMUNIDADE →</a>
+        </div>
+    </div>
+</section>
+
+<!-- VALUES -->
+
+<section class="section" id="processo">
+    <div class="container">
+        <div class="section-heading reveal">
+            <span class="eyebrow">NOSSA IDENTIDADE</span>
+            <h2>O QUE NOS <span>MOVE</span></h2>
+            <p>Os princípios que orientam nossas ideias e a maneira como desenvolvemos cada experiência.</p>
+        </div>
+
+        <div class="values-grid">
+            <article class="value-card reveal">
+                <div class="value-icon">✦</div>
+                <h3>CRIATIVIDADE</h3>
+                <p>Cada projeto começa com uma ideia. Buscamos criar experiências que tenham personalidade e identidade visual própria.</p>
+            </article>
+
+            <article class="value-card reveal">
+                <div class="value-icon">◈</div>
+                <h3>EVOLUÇÃO</h3>
+                <p>Trabalhamos para aprimorar nossos projetos, mecânicas e interfaces, sempre buscando novas possibilidades.</p>
+            </article>
+
+            <article class="value-card reveal">
+                <div class="value-icon">◎</div>
+                <h3>COMUNIDADE</h3>
+                <p>Acreditamos que os jogadores fazem parte da experiência. Suas ideias e opiniões ajudam a construir nossos universos.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- COMMUNITY -->
+
+<section class="section community-section" id="comunidade">
+    <div class="container">
+
+        <div class="section-heading reveal">
+            <span class="eyebrow">FAÇA PARTE</span>
+            <h2>SATZ <span>COMMUNITY</span></h2>
+            <p>Um lugar para jogadores, novidades, conversas e tudo relacionado aos universos da Satz Studio.</p>
+        </div>
+
+        <div class="community-banner reveal">
+            <div class="community-banner-content">
+                <span class="eyebrow">NOSSO SERVIDOR OFICIAL</span>
+                <h3>O PRÓXIMO NÍVEL É <span>JUNTOS.</span></h3>
+                <p>Entre no nosso Discord para acompanhar os projetos, conversar com a comunidade, compartilhar sugestões e encontrar ajuda.</p>
+            </div>
+
+            <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer" class="btn btn-discord">
+                <svg viewBox="0 0 24 24"><path d="M19.73 5.1a18.1 18.1 0 0 0-4.45-1.38.07.07 0 0 0-.08.04c-.19.34-.4.79-.55 1.14a16.8 16.8 0 0 0-5.03 0c-.15-.36-.36-.8-.56-1.14a.08.08 0 0 0-.08-.04A18 18 0 0 0 4.53 5.1a.07.07 0 0 0-.03.03C1.67 9.34.9 13.45 1.28 17.5c0 .02.02.05.04.06a18.2 18.2 0 0 0 5.46 2.76.08.08 0 0 0 .09-.03c.42-.57.8-1.17 1.12-1.8a.08.08 0 0 0-.04-.1 12 12 0 0 1-1.7-.82.08.08 0 0 1-.01-.13l.34-.27a.08.08 0 0 1 .08-.01c3.57 1.63 7.44 1.63 10.97 0a.08.08 0 0 1 .08.01l.34.27a.08.08 0 0 1-.01.13c-.54.32-1.1.6-1.7.82a.08.08 0 0 0-.04.1c.33.63.7 1.23 1.12 1.8a.08.08 0 0 0 .09.03 18.1 18.1 0 0 0 5.46-2.76.08.08 0 0 0 .04-.06c.45-4.68-.76-8.76-3.22-12.37a.06.06 0 0 0-.03-.03ZM8.28 14.9c-1.07 0-1.95-.98-1.95-2.18 0-1.2.86-2.18 1.95-2.18 1.1 0 1.97.99 1.95 2.18 0 1.2-.86 2.18-1.95 2.18Zm7.2 0c-1.07 0-1.95-.98-1.95-2.18 0-1.2.86-2.18 1.95-2.18 1.1 0 1.97.99 1.95 2.18 0 1.2-.85 2.18-1.95 2.18Z"/></svg>
+                ENTRAR NO DISCORD
+            </a>
+        </div>
+
+        <div class="community-grid">
+
+            <article class="community-card reveal">
+                <div class="community-card-top">
+                    <div class="community-icon">🌊</div>
+                    <span class="community-tag">GAME COMMUNITY</span>
+                </div>
+                <h4>BLACK SEAS</h4>
+                <p>Espaço dedicado ao jogo, novidades, atualizações, sugestões e conversas entre jogadores.</p>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">ACESSAR SERVIDOR ↗</a>
+            </article>
+
+            <article class="community-card reveal">
+                <div class="community-card-top">
+                    <div class="community-icon">🇧🇷</div>
+                    <span class="community-tag">GAME COMMUNITY</span>
+                </div>
+                <h4>OPERAÇÃO BRASIL</h4>
+                <p>Converse sobre o jogo, compartilhe suas experiências e acompanhe as novidades do projeto.</p>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">ACESSAR SERVIDOR ↗</a>
+            </article>
+
+            <article class="community-card reveal">
+                <div class="community-card-top">
+                    <div class="community-icon">🏁</div>
+                    <span class="community-tag">GAME COMMUNITY</span>
+                </div>
+                <h4>STREET RIVALS</h4>
+                <p>Encontre outros jogadores, converse sobre o projeto e compartilhe sugestões e novidades.</p>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">ACESSAR SERVIDOR ↗</a>
+            </article>
+
+            <article class="community-card reveal">
+                <div class="community-card-top">
+                    <div class="community-icon">🎧</div>
+                    <span class="community-tag">SUPORTE</span>
+                </div>
+                <h4>AJUDA & ATENDIMENTO</h4>
+                <p>Área para dúvidas, problemas, suporte aos jogadores e contato com a equipe.</p>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">ACESSAR SERVIDOR ↗</a>
+            </article>
+
+            <article class="community-card reveal">
+                <div class="community-card-top">
+                    <div class="community-icon">📢</div>
+                    <span class="community-tag">INFORMAÇÕES</span>
+                </div>
+                <h4>ANÚNCIOS & EVENTOS</h4>
+                <p>Acompanhe comunicados, notícias importantes, novidades e eventos da Satz Studio.</p>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">ACESSAR SERVIDOR ↗</a>
+            </article>
+
+            <article class="community-card reveal">
+                <div class="community-card-top">
+                    <div class="community-icon">💬</div>
+                    <span class="community-tag">COMMUNITY</span>
+                </div>
+                <h4>CHAT GERAL</h4>
+                <p>Conheça outros membros, faça amizades e participe das conversas da comunidade.</p>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">ACESSAR SERVIDOR ↗</a>
+            </article>
+
+        </div>
+
+        <p class="community-note">As áreas apresentadas representam a organização planejada da comunidade. Os canais disponíveis dependem da configuração atual do servidor.</p>
+    </div>
+</section>
+
+<!-- FAQ -->
+
+<section class="section faq-section" id="faq">
+    <div class="container">
+        <div class="section-heading reveal">
+            <span class="eyebrow">DÚVIDAS FREQUENTES</span>
+            <h2>PERGUNTAS <span>FREQUENTES</span></h2>
+            <p>Algumas informações para conhecer melhor a Satz Studio e nossos projetos.</p>
+        </div>
+
+        <div class="faq-list reveal">
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>O QUE É A SATZ STUDIO?</span>
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>A Satz Studio é um estúdio independente focado na criação e desenvolvimento de experiências dentro da plataforma Roblox.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>COMO POSSO JOGAR OS PROJETOS?</span>
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Acesse a seção de jogos e clique em "Jogar agora" no projeto que deseja conhecer. Você será direcionado à página do jogo no Roblox.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>COMO ENTRO NA COMUNIDADE?</span>
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Utilize qualquer botão do Discord disponível neste site para acessar o convite oficial da comunidade Satz Studio.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>COMO POSSO ENVIAR SUGESTÕES?</span>
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Entre no nosso servidor Discord e procure as áreas de sugestões e conversas relacionadas aos projetos.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>COMO POSSO PEDIR AJUDA?</span>
+                    <span>+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Acesse o Discord da Satz Studio e procure a área de ajuda e atendimento para entrar em contato com a equipe.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta-section">
+    <div class="container cta-content reveal">
+        <span class="eyebrow">SUA PRÓXIMA AVENTURA COMEÇA AQUI</span>
+        <h2>FAÇA PARTE <span>DISSO.</span></h2>
+        <p>Explore nossos jogos, conheça a comunidade e acompanhe tudo o que estamos construindo na Satz Studio.</p>
+
+        <div class="cta-buttons">
+            <a href="#jogos" class="btn btn-primary">EXPLORAR PROJETOS →</a>
+            <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer" class="btn btn-discord">ENTRAR NO DISCORD ↗</a>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer>
+    <div class="container">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <img src="satz-studio-1.png" alt="Satz Studio">
+                <p>Criando mundos, experiências e aventuras. Bem-vindo ao universo da Satz Studio.</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>NAVEGAÇÃO</h4>
+                <a href="#inicio">Início</a>
+                <a href="#jogos">Nossos jogos</a>
+                <a href="#estudio">O estúdio</a>
+                <a href="#processo">Nossa visão</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>COMUNIDADE</h4>
+                <a href="#comunidade">Satz Community</a>
+                <a href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer">Discord oficial ↗</a>
+                <a href="#faq">Perguntas frequentes</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>PROJETOS</h4>
+                <a href="https://www.roblox.com/games/10777289813" target="_blank" rel="noopener noreferrer">Black Seas ↗</a>
+                <a href="https://www.roblox.com/games/10771742919" target="_blank" rel="noopener noreferrer">Operação Brasil ↗</a>
+                <a href="https://www.roblox.com/games/10769788474" target="_blank" rel="noopener noreferrer">Street Rivals ↗</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="year"></span> SATZ STUDIO. TODOS OS DIREITOS RESERVADOS.</p>
+            <p>DESENVOLVIDO COM <span>✦</span> PELA SATZ STUDIO.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- FLOATING BUTTON -->
+
+<a class="floating-discord" href="https://discord.gg/CgFSEJhPXW" target="_blank" rel="noopener noreferrer" aria-label="Entrar no Discord da Satz Studio">
+    <span class="discord-tooltip">ENTRAR NA COMUNIDADE</span>
+    <svg viewBox="0 0 24 24"><path d="M19.73 5.1a18.1 18.1 0 0 0-4.45-1.38.07.07 0 0 0-.08.04c-.19.34-.4.79-.55 1.14a16.8 16.8 0 0 0-5.03 0c-.15-.36-.36-.8-.56-1.14a.08.08 0 0 0-.08-.04A18 18 0 0 0 4.53 5.1a.07.07 0 0 0-.03.03C1.67 9.34.9 13.45 1.28 17.5c0 .02.02.05.04.06a18.2 18.2 0 0 0 5.46 2.76.08.08 0 0 0 .09-.03c.42-.57.8-1.17 1.12-1.8a.08.08 0 0 0-.04-.1 12 12 0 0 1-1.7-.82.08.08 0 0 1-.01-.13l.34-.27a.08.08 0 0 1 .08-.01c3.57 1.63 7.44 1.63 10.97 0a.08.08 0 0 1 .08.01l.34.27a.08.08 0 0 1-.01.13c-.54.32-1.1.6-1.7.82a.08.08 0 0 0-.04.1c.33.63.7 1.23 1.12 1.8a.08.08 0 0 0 .09.03 18.1 18.1 0 0 0 5.46-2.76.08.08 0 0 0 .04-.06c.45-4.68-.76-8.76-3.22-12.37a.06.06 0 0 0-.03-.03ZM8.28 14.9c-1.07 0-1.95-.98-1.95-2.18 0-1.2.86-2.18 1.95-2.18 1.1 0 1.97.99 1.95 2.18 0 1.2-.86 2.18-1.95 2.18Zm7.2 0c-1.07 0-1.95-.98-1.95-2.18 0-1.2.86-2.18 1.95-2.18 1.1 0 1.97.99 1.95 2.18 0 1.2-.85 2.18-1.95 2.18Z"/></svg>
+</a>
+
+<button class="back-top" id="backTop" aria-label="Voltar ao topo">↑</button>
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">×</button>
+    <img src="" alt="Imagem ampliada" id="lightboxImage">
+</div>
+
+<script>
+/* LOADER */
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.getElementById("loader").classList.add("hide");
+    }, 500);
+});
+
+setTimeout(() => {
+    document.getElementById("loader").classList.add("hide");
+}, 3500);
+
+
+/* HEADER AND SCROLL */
+
+const header = document.getElementById("header");
+const progress = document.getElementById("scrollProgress");
+const backTop = document.getElementById("backTop");
+
+function updateScroll() {
+    const scrollTop = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+    header.classList.toggle("scrolled", scrollTop > 40);
+    backTop.classList.toggle("show", scrollTop > 500);
+
+    const percentage = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+    progress.style.width = percentage + "%";
+}
+
+window.addEventListener("scroll", updateScroll, { passive: true });
+updateScroll();
+
+backTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+
+/* MOBILE MENU */
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+function closeMenu() {
+    navLinks.classList.remove("open");
+    document.body.classList.remove("menu-open");
+    menuToggle.textContent = "☰";
+    menuToggle.setAttribute("aria-label", "Abrir menu");
+}
+
+menuToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    document.body.classList.toggle("menu-open", isOpen);
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+    menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+        closeMenu();
+    });
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeMenu();
+        closeLightbox();
+    }
+});
+
+
+/* REVEAL ANIMATIONS */
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.12
+});
+
+document.querySelectorAll(".reveal").forEach(element => {
+    revealObserver.observe(element);
+});
+
+
+/* PROJECT FILTERS */
+
+const filterButtons = document.querySelectorAll(".filter-btn");
+const projectCards = document.querySelectorAll(".project-card");
+
+filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        filterButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+
+        projectCards.forEach(card => {
+            const matches = filter === "all" || card.dataset.category === filter;
+            card.classList.toggle("hidden", !matches);
+        });
+    });
+});
+
+
+/* FAQ ACCORDION */
+
+document.querySelectorAll(".faq-question").forEach(question => {
+    question.addEventListener("click", () => {
+        const item = question.closest(".faq-item");
+        const answer = item.querySelector(".faq-answer");
+        const isOpen = item.classList.contains("open");
+
+        document.querySelectorAll(".faq-item").forEach(other => {
+            other.classList.remove("open");
+            other.querySelector(".faq-answer").style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+            item.classList.add("open");
+            answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+    });
+});
+
+
+/* LIGHTBOX */
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxClose = document.getElementById("lightboxClose");
+
+function closeLightbox() {
+    lightbox.classList.remove("show");
+    document.body.style.overflow = "";
+}
+
+document.querySelectorAll(".lightbox-trigger").forEach(trigger => {
+    trigger.addEventListener("click", () => {
+        const image = trigger.querySelector("img");
+
+        if (!image) return;
+
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        lightbox.classList.add("show");
+        document.body.style.overflow = "hidden";
+    });
+});
+
+lightboxClose.addEventListener("click", closeLightbox);
+
+lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) {
+        closeLightbox();
+    }
+});
+
+
+/* ACTIVE NAVIGATION */
+
+const sections = document.querySelectorAll("main section[id]");
+const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+const activeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            navAnchors.forEach(anchor => {
+                anchor.classList.toggle(
+                    "active",
+                    anchor.getAttribute("href") === "#" + entry.target.id
+                );
+            });
+        }
+    });
+}, {
+    rootMargin: "-35% 0px -55% 0px"
+});
+
+sections.forEach(section => activeObserver.observe(section));
+
+
+/* FOOTER YEAR */
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+
+/* IMAGE ERROR CHECK */
+
+document.querySelectorAll("img").forEach(img => {
+    img.addEventListener("error", () => {
+        console.warn("Não foi possível carregar a imagem:", img.src);
+    });
+});
+</script>
+
+</body>
+</html>
